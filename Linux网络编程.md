@@ -189,7 +189,7 @@ int connect(int sockfd,const struct sockaddr*addr,socklen_t addrlen);//请求连
 
 | 服务端                                                       | 客户端                                                       |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| 1.socket：创建套接字<br /> 2.bind：绑定套接字 <br />3.recvfrom：获取客户端数据（包括IP和端口） <br />4.sendto：向客户端发送数据 <br />5.close：关闭连接 | 1.socket：创建套接字 <br />2.sendto：向服务端发送数据 <br />3.recvfrom：获取服务端数据 <br />4.close：关闭连接 |
+| 1.socket：创建套接字<br />2.bind：绑定套接字 <br />3.recvfrom：获取客户端数据（包括IP和端口） <br />4.sendto：向客户端发送数据 <br />5.close：关闭连接 | 1.socket：创建套接字 <br />2.sendto：向服务端发送数据 <br />3.recvfrom：获取服务端数据 <br />4.close：关闭连接 |
 
 ```c
 #include <sys/types.h>
