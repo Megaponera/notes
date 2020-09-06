@@ -1536,6 +1536,8 @@ SELECT COUNT(key1) WHERE key1 < 2 GROUP BY key3;#key2未匹配
 - 子表与外表数据量大小差不多，用in与exists的效率相差不大
 - not in 和 not exists 使用not in 会内外表都全表扫描；使用not exists还能用上内表（子表）的索引。所以，**如果能用上子表的索引，建议使用Not exists**
 
+**因为in和exists语句编写上的差异，会导致使用不同表的索引；效率最高的查询方式是使用到大表的索引**
+
 
 
 ## ORDER BY 和 GROUP BY的索引优化
