@@ -8,7 +8,7 @@
 4. gcc -c hello.s ：将汇编代码转换为二进制文件，生成hello.o
 5. 系统调用ld，链接需要的资源，生成可执行文件hello.out
 
-**可以直接 gcc -c hello.c即可获得可执行文件**
+**可以直接 gcc  hello.c即可获得可执行文件**
 
 
 
