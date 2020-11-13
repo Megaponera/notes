@@ -1,3 +1,7 @@
+
+
+
+
 # 一些名词解释
 
 #### DB(database) 数据库
@@ -1892,3 +1896,32 @@ SELECT * FROM tb WHERE ... FOR UPDATE;	#FOR UPDATE可以加锁
 5. 从机配置复制主机的slave信息
 6. 主机新建库、新建表、插入记录，从机复制
 7. 从机停止复制
+
+
+
+# 开启数据库远程连接
+
+1. 注释掉/etc/mysql/mysql.conf.d/mysqld.cnf中的bind-address = 127.0.0.1
+2. mysql中
+   1. use mysql
+   2. update user set host='%' where user='root'
+   3. flush privileges
+   4. ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '123456'
+   5. flush privileges
+   6. 退出mysql，重启MySQL服务
+3. 登陆：mysql -h 255.255.255.255 -P 3306 -u root -p
+
+
+
+## 密码安全级别
+
+```mysql
+show variables like 'validate_password%';
+```
+
+### 修改
+
+```mysql
+set global validate_password.--- = ---;
+```
+

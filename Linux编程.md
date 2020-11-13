@@ -1315,6 +1315,9 @@ DIR *fdopendir(int fd);
 #include <unistd.h>
 //重定向
 int dup(int oldfd);
+//如果newfd已经打开，则先将其关闭。
+//如果newfd等于oldfd，则dup2返回newfd, 而不关闭它。
+//dup2函数返回的新文件描述符同样与参数oldfd共享同一文件表项
 int dup2(int oldfd, int newfd);
 ```
 
