@@ -1,0 +1,1 @@
+VScode代理:go env -w GOPROXY=https://goproxy.cn,direct

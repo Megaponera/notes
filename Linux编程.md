@@ -264,7 +264,7 @@ InterProcess Communication (IPC) 进程间通信，通过内核缓冲区进行�
 
 ```C
 #include <unistd.h>
-//默认pipefd[0]是写端,pipefd[1]是读端
+//默认pipefd[0]是数据读出端,pipefd[1]是数据流入端
 int pipe(int pipefd[2]);
 
 //例
