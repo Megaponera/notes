@@ -10,7 +10,7 @@
 
 #### SQL(Structure Query Language) 结构化查询语言
 
-##### DQL(Date Query Language) 数据查询语言（select）
+##### DQL(Data Query Language) 数据查询语言（select）
 
 ##### DML(Data Manipulation Language) 数据操纵语言 
 
@@ -146,7 +146,7 @@ LOWER(key); #全部字母改小写
 ```mysql
 SUBSTR(key,pos); #从下标pos开始截取字符串
 SUBSTR(key,pos，len);#从下标pos开始截取字符串，截取长度为len
-SUBSTR('你好世界',2);#截取出 ‘世界’ ；数据库从下标1开始算，截取的是字符数，而不是字节大小
+SUBSTR('你好世界',2);#截取出 ‘好世界’ ；数据库从下标1开始算，截取的是字符数，而不是字节大小
 ```
 
 #### INSTR
@@ -1038,11 +1038,10 @@ DROP VIEW v;
 ```mysql
 #查看变量
 SHOW SESSION | GLOBAL VARIABLES;
-
-#查看变量的值
-SHOW @@SESSION. | @@GLOBAL. /* 变量名 */ #注意，SESSION和GLOBAL后面要加一个.
+SELECT @@SESSION. | @@GLOBAL. /* 变量名 */ #注意，SESSION和GLOBAL后面要加一个.
 
 #赋值
+#设置时如果不指定SESSION或者GLOBAL,默认设置SESSION变量
 SET SESSION | GLOBAL name = val;
 SET @@SESSION. | @@GLOBAL. name = val;
 ```
