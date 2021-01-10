@@ -149,7 +149,7 @@ http{
 
 ## 高可用
 
-![image-20210111023044869](C:\C++学习资料\学习笔记\keepalived_nginx高可用.png)
+![image-20210111023044869](.\keepalived_nginx高可用.png)
 
 
 
