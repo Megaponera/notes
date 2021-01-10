@@ -243,5 +243,61 @@ ip a  #查看虚拟ip信息
 
 ```
 
+#### keepalived.conf
 
+```shell
+! Configuration File for keepalived
+ 
+global_defs {
+   router_id kp_s1   #在一个网络应该是唯一的
+}
+ 
+vrrp_script chk_nginx {
+    script "/usr/local/src/nginx_check.sh" #定时检查nginx是否正常运行的脚本
+    interval 2   #脚本执行间隔，每2s检测一次
+    weight -5    #脚本结果导致的优先级变更，检测失败（脚本返回非0）则优先级 -5
+    fall 2       #检测连续2次失败才算确定是真失败。会用weight减少优先级（1-255之间）
+    rise 1       #检测1次成功就算成功。但不修改优先级
+}
+  
+vrrp_instance VI_1 {
+    #指定keepalived的角色,这里指定的不一定就是MASTER，实际会根据优先级调整，另一台为BACKUP
+    state MASTER   
+    interface ens33        #当前进行vrrp通讯的网卡
+    virtual_router_id 200  #虚拟路由编号(数字1-255)，主从要一致
+    # mcast_src_ip 192.168.79.191  #
+    priority 100  #定义优先级，数字越大，优先级越高，MASTER的优先级必须大于BACKUP的优先级
+    nopreempt
+    advert_int 1   #设定MASTER与BACKUP负载均衡器之间同步检查的时间间隔，单位是秒
+    authentication {
+        auth_type PASS
+        auth_pass 2222
+    }
+    #执行监控的服务。注意这个设置不能紧挨着写在vrrp_script配置块的后面（实验中碰过的坑），
+    #否则nginx监控失效！！
+    track_script {
+        chk_nginx    #引用VRRP脚本，即在 vrrp_script 部分指定的名字。
+                     #定期运行它们来改变优先级，并最终引发主备切换。
+    }
+ 
+    virtual_ipaddress {#VRRP HA 虚拟地址 如果有多个VIP，继续换行填写
+        192.168.79.210
+    }
+}
+```
+
+#### nginx_check.sh
+
+```shell
+# !/bin/bash
+A=`ps -C nginx --no-heading|wc -l`
+if [$A -ep 0];then
+	/usr/local/nginx/sbin/nginx		#重启nginx
+    sleep 2
+    A=`ps -C nginx --no-heading|wc -l`
+    if [ $A -ep 0 ]; then			#重启失败
+        /etc/init.d/keepalived stop	#关闭当前服务器的keepalived
+    fi
+fi
+```
 
